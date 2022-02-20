@@ -1,19 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import "./querytabview.css";
-function QueryTabView() {
-  const [uri, setUri] = useState("");
+import { HttpRequestContext } from "../../context/HttpRequest";
 
+function QueryTabView() {
+  const { reqObj, updateReqObj } = useContext(HttpRequestContext);
+
+  const [refresh, setRefresh] = useState(false);
   const queryParamsRef = useRef([
     {
       key: "",
       value: "",
     },
   ]);
-  const [refresh, setRefresh] = useState(false);
-
-  const handleUriChange = (e) => {
-    setUri(e.target.value);
-  };
 
   const handleKeyChange = (e) => {
     hanldePushToQp({
@@ -46,13 +44,13 @@ function QueryTabView() {
       str = str.substring(0, str.length - 1);
     }
 
-    let endpoint = uri;
+    let endpoint = reqObj.endpoint;
     if (endpoint.trim() !== "") {
       if (endpoint.indexOf("?")) {
         const newEndpoint = endpoint.slice(0, endpoint.indexOf("?"));
-        setUri(`${newEndpoint}${str}`);
+        updateReqObj(reqObj, { endpoint: `${newEndpoint}${str}` });
       } else {
-        setUri(`${endpoint}${str}`);
+        updateReqObj(reqObj, { endpoint: `${endpoint}${str}` });
       }
     }
   };
@@ -84,9 +82,12 @@ function QueryTabView() {
     const prevQp = queryParamsRef.current;
     queryParamsRef.current = prevQp.filter((item, idx) => idx !== deleteIdx);
     setRefresh(!refresh);
+    handleBuildQuery();
   };
 
-  console.log(queryParamsRef.current);
+  useEffect(() => {
+    updateReqObj(reqObj, { queryParams: queryParamsRef.current });
+  }, [refresh]);
 
   return (
     <>
@@ -122,43 +123,6 @@ function QueryTabView() {
           </div>
         ))}
       </section>
-    </>
-  );
-
-  return (
-    <>
-      <div>
-        <button onClick={handleAddMoreQueryParams}>ADD MORE</button>
-        <input
-          type="text"
-          value={uri}
-          placeholder="endpoint"
-          onChange={handleUriChange}
-          style={{ width: "100%", margin: "10px" }}
-        />
-      </div>
-      {/* query params */}
-      <div>
-        {queryParamsRef.current.map((item, idx) => (
-          <div key={idx}>
-            <span>Key</span>
-            <input
-              type="text"
-              value={item?.key}
-              data-idx={idx}
-              onChange={handleKeyChange}
-            />
-            <span>Value</span>
-            <input
-              type="text"
-              value={item?.value}
-              data-idx={idx}
-              onChange={handleValueChange}
-            />
-            <button onClick={() => handleRemoveQueryParam(idx)}>DELETE</button>
-          </div>
-        ))}
-      </div>
     </>
   );
 }

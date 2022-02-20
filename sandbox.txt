@@ -1,10 +1,6 @@
-[
-    {
-        key: 'key',
-        value: 'value'
-    },
-    {
-        key: 'key',
-        value: 'value'
-    },
-]
+{
+    endpoint: '',
+    formData: {},
+    binaryData: {},
+    httpHeaders: {}
+}

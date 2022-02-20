@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import "./methodSelectorInput.css";
+import { HttpRequestContext } from "../../context/HttpRequest";
 const MethodSelectorInput = () => {
-  const [selectMethod, setSelectMethod] = useState("GET");
-
+  const { reqObj, updateReqObj } = useContext(HttpRequestContext);
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const toggleOptions = (bool) => setIsOptionsVisible(bool);
   const handleSelectMethod = (Method = "GET") => {
-    setSelectMethod(Method);
+    updateReqObj(reqObj, { httpMethod: Method });
+
     toggleOptions(false);
   };
 
@@ -36,7 +37,7 @@ const MethodSelectorInput = () => {
           }}
           onClick={() => toggleOptions(!isOptionsVisible)}
         >
-          <span>{selectMethod}</span>
+          <span>{reqObj.httpMethod}</span>
           <div
             style={{
               position: "absolute",
