@@ -1,0 +1,26 @@
+.action-tabs__conatiner {
+  width: 100%;
+  height: 100%;
+}
+
+.action-tabs__tab-box {
+  padding: 0 2rem;
+  border-bottom: 1px solid #fff;
+}
+
+.action-tab__list {
+  list-style: none;
+  display: flex;
+  padding: 0 0.5rem;
+}
+.action-tab__list-item {
+  padding: 10px 20px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+.action-tab__list-item.active {
+  border-bottom: 3px solid #fff;
+}
+.action-tab__list-item:hover {
+  background-color: #161616;
+}

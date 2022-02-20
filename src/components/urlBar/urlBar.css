@@ -1,0 +1,25 @@
+.urlbar {
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2%;
+}
+
+.urlbar__endpoint-input {
+  border: 1px solid #fff;
+  padding: 10px;
+  flex: 1;
+
+  cursor: text;
+}
+.urlbar__sendbtn {
+  border: 1px solid #fff;
+  padding: 10px;
+  cursor: pointer;
+}
