@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 17px;
+}
+
+.add-more-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-more-btn-box span {
+  font-size: 11px;
+  padding: 2px;
+  cursor: pointer;
+}
+.add-more-btn-box span:hover {
+}
+
+.fields-section {
+  padding: 1rem 0;
+}
+
+.field {
+  display: flex;
+  margin: 0 15px 0 0;
+}
+.field .row {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+.field .row input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  outline: none;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.field .delete-btn__box {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.field .delete-btn__box span {
+  /* display: none; */
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+}

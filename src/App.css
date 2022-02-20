@@ -19,9 +19,9 @@ body {
 }
 
 .tab-view {
-  padding: 2rem;
+  padding: 1rem;
   width: 90%;
   margin: 0 auto;
   height: 100%;
-  background-color: pink;
+  /* background-color: pink; */
 }
