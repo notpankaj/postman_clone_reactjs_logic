@@ -159,7 +159,6 @@ const Body = () => {
   const handleFormDataFieldDelete = (itemIdx) => {
     const prevState = formDataRef.current;
     formDataRef.current = prevState.filter((item, idx) => idx !== itemIdx);
-
     setRefresh(!refresh);
   };
   const handleBinaryFormDataFieldDelete = (itemIdx) => {
