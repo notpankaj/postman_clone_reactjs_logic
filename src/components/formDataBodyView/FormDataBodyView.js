@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { HttpRequestContext } from "../../context/HttpRequest";
+import "./formDataBodyView.css";
 
 const BinaryInput = ({ handleBinaryFileValueChange, idx, item, refresh }) => {
   const inputRef = useRef(null);
@@ -8,10 +9,10 @@ const BinaryInput = ({ handleBinaryFileValueChange, idx, item, refresh }) => {
   );
   console.log({ item }, "form input");
   useEffect(() => {
-    setFileNameTOshow(item?.fieldValue?.name || "No");
+    setFileNameTOshow(item?.fieldValue?.name || "No File Choosen!..");
   }, [refresh, item]);
   return (
-    <>
+    <div style={{ flex: 1 }}>
       <input
         type="file"
         data-idx={idx}
@@ -20,9 +21,27 @@ const BinaryInput = ({ handleBinaryFileValueChange, idx, item, refresh }) => {
         hidden
         ref={inputRef}
       />
-      <button onClick={() => inputRef.current.click()}>CHOOSE FILE</button>
-      <span>{fileNameTOshow}</span>
-    </>
+      <button
+        style={{
+          border: "1px solid #fff",
+          padding: "5px",
+          borderRadius: "4px",
+          fontSize: "0.6rem",
+          margin: "0 8px 0 0",
+        }}
+        onClick={() => inputRef.current.click()}
+      >
+        CHOOSE FILE
+      </button>
+      <span
+        style={{
+          fontSize: "0.6rem",
+          fontStyle: "italic",
+        }}
+      >
+        {fileNameTOshow}
+      </span>
+    </div>
   );
 };
 
@@ -30,12 +49,6 @@ const FormDataBodyView = () => {
   const [refresh, setRefresh] = useState(false);
 
   const { reqObj, updateReqObj } = useContext(HttpRequestContext);
-
-  const handleSubmit = () => {
-    // console.log(formDataRef);
-    // console.log(formDataWithFilesRef);
-    console.log(reqObj);
-  };
 
   const formDataRef = useRef([
     {
@@ -195,39 +208,40 @@ const FormDataBodyView = () => {
 
   return (
     <>
-      <>
-        <div>
-          <button onClick={handleAddMoreFormDataField}> formData ADD</button>
-          <br />
-          <button onClick={handleAddMoreBinaryFormDataField}>
-            binnary ADD
-          </button>
-          <br />
+      <section>
+        <div className="formDataView-header">
+          <h4>FormData (Normal)</h4>
+          <div className="add-more-btn-box">
+            <span onClick={handleAddMoreFormDataField}>Add More Field</span>
+          </div>
         </div>
+
         {/* query params */}
         <div>
           {formDataRef.current.map((item, idx) => (
-            <div key={idx}>
-              <span>FieldName</span>
-              <input
-                type="text"
-                value={item?.fieldName}
-                data-idx={idx}
-                onChange={handleFileNameChange}
-              />
-              <span>Value</span>
-              <input
-                type="text"
-                data-idx={idx}
-                value={item?.fieldValue}
-                onChange={handleFileValueChange}
-              />
-              <button onClick={() => handleFormDataFieldDelete(idx)}>
-                Delete
-              </button>
+            <div key={idx} className="field">
+              <div className="row">
+                <input
+                  type="text"
+                  placeholder="field Key"
+                  value={item?.fieldName}
+                  data-idx={idx}
+                  onChange={handleFileNameChange}
+                />
+                <input
+                  type="text"
+                  data-idx={idx}
+                  placeholder="field Value"
+                  value={item?.fieldValue}
+                  onChange={handleFileValueChange}
+                />
+              </div>
+
+              <div className="delete-btn__box">
+                <span onClick={() => handleFormDataFieldDelete(idx)}>x</span>
+              </div>
             </div>
           ))}
-          <button onClick={handleSubmit}>submit</button>
         </div>
 
         <hr
@@ -235,20 +249,30 @@ const FormDataBodyView = () => {
             width: "100%",
             background: "#fff",
             height: "2px",
-            margin: "50px 0",
+            marginTop: "30px",
+            marginBottom: "10px",
           }}
         />
+
+        <div className="formDataView-header">
+          <h4>FormData (Binary)</h4>
+          <div className="add-more-btn-box">
+            <span onClick={handleAddMoreBinaryFormDataField}>
+              Add Binary Field
+            </span>
+          </div>
+        </div>
+
         {formDataWithFilesRef.current.map((item, idx) => (
-          <div key={idx}>
-            <div>
-              <span>FieldName</span>
+          <div key={idx} className="field">
+            <div className="row">
               <input
                 type="text"
+                placeholder="field Key"
                 data-idx={idx}
                 value={item?.fieldName}
                 onChange={handleBinaryFileNameChange}
               />
-              <span>Value</span>
               <BinaryInput
                 item={item}
                 idx={idx}
@@ -257,12 +281,14 @@ const FormDataBodyView = () => {
               />
             </div>
 
-            <button onClick={() => handleBinaryFormDataFieldDelete(idx)}>
-              Delete
-            </button>
+            <div className="delete-btn__box">
+              <span onClick={() => handleBinaryFormDataFieldDelete(idx)}>
+                x
+              </span>
+            </div>
           </div>
         ))}
-      </>
+      </section>
     </>
   );
 };

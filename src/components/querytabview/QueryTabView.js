@@ -90,7 +90,7 @@ function QueryTabView() {
   }, [refresh]);
 
   return (
-    <>
+    <section>
       <div className="header">
         <span className="title">Query Parameters</span>
         <div className="add-more-btn-box">
@@ -123,7 +123,7 @@ function QueryTabView() {
           </div>
         ))}
       </section>
-    </>
+    </section>
   );
 }
 
